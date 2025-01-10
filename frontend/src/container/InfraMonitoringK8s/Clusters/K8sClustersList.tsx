@@ -289,7 +289,7 @@ function K8sClustersList({
 		}
 
 		logEvent('Infra Monitoring: K8s cluster list item clicked', {
-			cluster_name: record.clusterName,
+			clusterName: record.clusterName,
 		});
 	};
 
