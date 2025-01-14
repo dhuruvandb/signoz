@@ -84,7 +84,7 @@ const columnsConfig = [
 		key: 'clusterName',
 		ellipsis: true,
 		width: 150,
-		sorter: true,
+		sorter: false,
 		align: 'left',
 	},
 	{

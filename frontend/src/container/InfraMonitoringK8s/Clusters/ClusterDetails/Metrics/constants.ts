@@ -641,7 +641,7 @@ export const getClusterQueryPayload = (
 	},
 	{
 		selectedTime: 'GLOBAL_TIME',
-		graphType: PANEL_TYPES.TIME_SERIES,
+		graphType: PANEL_TYPES.TABLE,
 		query: {
 			builder: {
 				queryData: [
@@ -788,13 +788,13 @@ export const getClusterQueryPayload = (
 			queryType: EQueryType.QUERY_BUILDER,
 		},
 		variables: {},
-		formatForWeb: false,
+		formatForWeb: true,
 		start,
 		end,
 	},
 	{
 		selectedTime: 'GLOBAL_TIME',
-		graphType: PANEL_TYPES.TIME_SERIES,
+		graphType: PANEL_TYPES.TABLE,
 		query: {
 			builder: {
 				queryData: [
@@ -1061,13 +1061,13 @@ export const getClusterQueryPayload = (
 			queryType: EQueryType.QUERY_BUILDER,
 		},
 		variables: {},
-		formatForWeb: false,
+		formatForWeb: true,
 		start,
 		end,
 	},
 	{
 		selectedTime: 'GLOBAL_TIME',
-		graphType: PANEL_TYPES.TIME_SERIES,
+		graphType: PANEL_TYPES.TABLE,
 		query: {
 			builder: {
 				queryData: [
@@ -1250,13 +1250,13 @@ export const getClusterQueryPayload = (
 			queryType: EQueryType.QUERY_BUILDER,
 		},
 		variables: {},
-		formatForWeb: false,
+		formatForWeb: true,
 		start,
 		end,
 	},
 	{
 		selectedTime: 'GLOBAL_TIME',
-		graphType: PANEL_TYPES.TIME_SERIES,
+		graphType: PANEL_TYPES.TABLE,
 		query: {
 			builder: {
 				queryData: [
@@ -1523,7 +1523,7 @@ export const getClusterQueryPayload = (
 			queryType: EQueryType.QUERY_BUILDER,
 		},
 		variables: {},
-		formatForWeb: false,
+		formatForWeb: true,
 		start,
 		end,
 	},
