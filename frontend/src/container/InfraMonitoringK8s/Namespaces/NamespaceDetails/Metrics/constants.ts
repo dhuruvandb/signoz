@@ -9,11 +9,11 @@ import { v4 } from 'uuid';
 
 export const namespaceWidgetInfo = [
 	{
-		title: 'CPU Utilization (cores)',
+		title: 'CPU Usage (cores)',
 		yAxisUnit: '',
 	},
 	{
-		title: 'Memory Utilization (bytes)',
+		title: 'Memory Usage (bytes)',
 		yAxisUnit: 'bytes',
 	},
 	{
@@ -1091,7 +1091,7 @@ export const getNamespaceQueryPayload = (
 			queryType: EQueryType.QUERY_BUILDER,
 		},
 		variables: {},
-		formatForWeb: false,
+		formatForWeb: true,
 		start,
 		end,
 	},
@@ -1240,7 +1240,7 @@ export const getNamespaceQueryPayload = (
 			queryType: EQueryType.QUERY_BUILDER,
 		},
 		variables: {},
-		formatForWeb: false,
+		formatForWeb: true,
 		start,
 		end,
 	},
@@ -1481,7 +1481,7 @@ export const getNamespaceQueryPayload = (
 			queryType: EQueryType.QUERY_BUILDER,
 		},
 		variables: {},
-		formatForWeb: false,
+		formatForWeb: true,
 		start,
 		end,
 	},
@@ -1625,7 +1625,7 @@ export const getNamespaceQueryPayload = (
 			queryType: EQueryType.QUERY_BUILDER,
 		},
 		variables: {},
-		formatForWeb: false,
+		formatForWeb: true,
 		start,
 		end,
 	},

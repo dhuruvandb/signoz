@@ -22,7 +22,7 @@ export interface K8sNamespacesData {
 	memoryUsage: number;
 	meta: {
 		k8s_cluster_name: string;
-		k8s_namespace_uid: string;
+		k8s_namespace_name: string;
 	};
 }
 

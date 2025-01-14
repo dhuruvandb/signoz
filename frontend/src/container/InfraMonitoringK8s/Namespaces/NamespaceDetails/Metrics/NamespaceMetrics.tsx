@@ -5,6 +5,11 @@ import { K8sNamespacesData } from 'api/infraMonitoring/getK8sNamespacesList';
 import cx from 'classnames';
 import Uplot from 'components/Uplot';
 import { ENTITY_VERSION_V4 } from 'constants/app';
+import { PANEL_TYPES } from 'constants/queryBuilder';
+import {
+	getMetricsTableData,
+	MetricsTable,
+} from 'container/InfraMonitoringK8s/commonUtils';
 import DateTimeSelectionV2 from 'container/TopNav/DateTimeSelectionV2';
 import {
 	CustomTimeType,
@@ -19,6 +24,7 @@ import { useMemo, useRef } from 'react';
 import { useQueries, UseQueryResult } from 'react-query';
 import { SuccessResponse } from 'types/api';
 import { MetricRangePayloadProps } from 'types/api/metrics/getQueryRange';
+import { Options } from 'uplot';
 
 import { getNamespaceQueryPayload, namespaceWidgetInfo } from './constants';
 
@@ -63,14 +69,24 @@ function NamespaceMetrics({
 	const dimensions = useResizeObserver(graphRef);
 
 	const chartData = useMemo(
-		() => queries.map(({ data }) => getUPlotChartData(data?.payload)),
+		() =>
+			queries.map(({ data }) => {
+				const panelType = (data?.params as any)?.compositeQuery?.panelType;
+				return panelType === PANEL_TYPES.TABLE
+					? getMetricsTableData(data)
+					: getUPlotChartData(data?.payload);
+			}),
 		[queries],
 	);
 
 	const options = useMemo(
 		() =>
-			queries.map(({ data }, idx) =>
-				getUPlotChartOptions({
+			queries.map(({ data }, idx) => {
+				const panelType = (data?.params as any)?.compositeQuery?.panelType;
+				if (panelType === PANEL_TYPES.TABLE) {
+					return null;
+				}
+				return getUPlotChartOptions({
 					apiResponse: data?.payload,
 					isDarkMode,
 					dimensions,
@@ -79,8 +95,8 @@ function NamespaceMetrics({
 					softMin: null,
 					minTimeScale: timeRange.startTime,
 					maxTimeScale: timeRange.endTime,
-				}),
-			),
+				});
+			}),
 		[queries, isDarkMode, dimensions, timeRange.startTime, timeRange.endTime],
 	);
 
@@ -97,6 +113,9 @@ function NamespaceMetrics({
 				(query.error as Error)?.message || 'Something went wrong';
 			return <div>{errorMessage}</div>;
 		}
+
+		const { panelType } = (query.data?.params as any).compositeQuery;
+
 		return (
 			<div
 				className={cx('chart-container', {
@@ -104,7 +123,14 @@ function NamespaceMetrics({
 						!query.isLoading && !query?.data?.payload?.data?.result?.length,
 				})}
 			>
-				<Uplot options={options[idx]} data={chartData[idx]} />
+				{panelType === PANEL_TYPES.TABLE ? (
+					<MetricsTable
+						rows={chartData[idx][0].rows}
+						columns={chartData[idx][0].columns}
+					/>
+				) : (
+					<Uplot options={options[idx] as Options} data={chartData[idx]} />
+				)}
 			</div>
 		);
 	};

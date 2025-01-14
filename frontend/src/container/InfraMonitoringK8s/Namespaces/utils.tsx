@@ -1,3 +1,4 @@
+import { Color } from '@signozhq/design-tokens';
 import { Tag } from 'antd';
 import { ColumnType } from 'antd/es/table';
 import {
@@ -76,7 +77,7 @@ const columnsConfig = [
 		key: 'namespaceName',
 		ellipsis: true,
 		width: 120,
-		sorter: true,
+		sorter: false,
 		align: 'left',
 	},
 	{
@@ -85,11 +86,11 @@ const columnsConfig = [
 		key: 'clusterName',
 		ellipsis: true,
 		width: 120,
-		sorter: true,
+		sorter: false,
 		align: 'left',
 	},
 	{
-		title: <div className="column-header-left">CPU Utilization (cores)</div>,
+		title: <div className="column-header-left">CPU Usage (cores)</div>,
 		dataIndex: 'cpu',
 		key: 'cpu',
 		width: 100,
@@ -97,7 +98,7 @@ const columnsConfig = [
 		align: 'left',
 	},
 	{
-		title: <div className="column-header-left">Memory Utilization (bytes)</div>,
+		title: <div className="column-header-left">Mem Usage</div>,
 		dataIndex: 'memory',
 		key: 'memory',
 		width: 80,
@@ -133,7 +134,7 @@ const getGroupByEle = (
 	return (
 		<div className="pod-group">
 			{groupByValues.map((value) => (
-				<Tag key={value} color="#1D212D" className="pod-group-tag-item">
+				<Tag key={value} color={Color.BG_SLATE_400} className="pod-group-tag-item">
 					{value === '' ? '<no-value>' : value}
 				</Tag>
 			))}
@@ -145,9 +146,9 @@ export const formatDataForTable = (
 	data: K8sNamespacesData[],
 	groupBy: IBuilderQuery['groupBy'],
 ): K8sNamespacesRowData[] =>
-	data.map((namespace, index) => ({
-		key: `${namespace.namespaceName}-${index}`,
-		namespaceUID: namespace.meta.k8s_namespace_uid,
+	data.map((namespace) => ({
+		key: namespace.namespaceName,
+		namespaceUID: namespace.namespaceName,
 		namespaceName: namespace.namespaceName,
 		clusterName: namespace.meta.k8s_cluster_name,
 		cpu: (
