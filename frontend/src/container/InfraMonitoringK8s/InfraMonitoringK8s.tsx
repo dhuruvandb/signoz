@@ -7,7 +7,7 @@ import { Collapse, Tooltip, Typography } from 'antd';
 import QuickFilters from 'components/QuickFilters/QuickFilters';
 import { useQueryBuilder } from 'hooks/queryBuilder/useQueryBuilder';
 import { useQueryOperations } from 'hooks/queryBuilder/useQueryBuilderOperations';
-import { Container, Workflow } from 'lucide-react';
+import { Container, HardDrive, Workflow } from 'lucide-react';
 import ErrorBoundaryFallback from 'pages/ErrorBoundaryFallback/ErrorBoundaryFallback';
 import { useCallback, useState } from 'react';
 import { Query } from 'types/api/queryBuilder/queryBuilderData';
@@ -16,9 +16,11 @@ import {
 	K8sCategories,
 	NodesQuickFiltersConfig,
 	PodsQuickFiltersConfig,
+	VolumesQuickFiltersConfig,
 } from './constants';
 import K8sNodesList from './Nodes/K8sNodesList';
 import K8sPodLists from './Pods/K8sPodLists';
+import K8sVolumesList from './Volumes/K8sVolumesList';
 
 export default function InfraMonitoringK8s(): JSX.Element {
 	const [showFilters, setShowFilters] = useState(true);
@@ -154,26 +156,26 @@ export default function InfraMonitoringK8s(): JSX.Element {
 		// 		/>
 		// 	),
 		// },
-		// {
-		// 	label: (
-		// 		<div className="k8s-quick-filters-category-label">
-		// 			<div className="k8s-quick-filters-category-label-container">
-		// 				<HardDrive size={14} className="k8s-quick-filters-category-label-icon" />
-		// 				<Typography.Text>Volumes</Typography.Text>
-		// 			</div>
-		// 		</div>
-		// 	),
-		// 	key: K8sCategories.VOLUMES,
-		// 	showArrow: false,
-		// 	children: (
-		// 		<QuickFilters
-		// 			source="infra-monitoring"
-		// 			config={VolumesQuickFiltersConfig}
-		// 			handleFilterVisibilityChange={handleFilterVisibilityChange}
-		// 			onFilterChange={handleFilterChange}
-		// 		/>
-		// 	),
-		// },
+		{
+			label: (
+				<div className="k8s-quick-filters-category-label">
+					<div className="k8s-quick-filters-category-label-container">
+						<HardDrive size={14} className="k8s-quick-filters-category-label-icon" />
+						<Typography.Text>Volumes</Typography.Text>
+					</div>
+				</div>
+			),
+			key: K8sCategories.VOLUMES,
+			showArrow: false,
+			children: (
+				<QuickFilters
+					source="infra-monitoring"
+					config={VolumesQuickFiltersConfig}
+					handleFilterVisibilityChange={handleFilterVisibilityChange}
+					onFilterChange={handleFilterChange}
+				/>
+			),
+		},
 		// {
 		// 	label: (
 		// 		<div className="k8s-quick-filters-category-label">
@@ -307,6 +309,13 @@ export default function InfraMonitoringK8s(): JSX.Element {
 
 						{selectedCategory === K8sCategories.NODES && (
 							<K8sNodesList
+								isFiltersVisible={showFilters}
+								handleFilterVisibilityChange={handleFilterVisibilityChange}
+							/>
+						)}
+
+						{selectedCategory === K8sCategories.VOLUMES && (
+							<K8sVolumesList
 								isFiltersVisible={showFilters}
 								handleFilterVisibilityChange={handleFilterVisibilityChange}
 							/>
